@@ -1,0 +1,479 @@
+{
+  "info": {
+    "name": "MERN Auth API – Full Test Suite",
+    "_postman_id": "mern-auth-2026",
+    "description": "Complete Postman collection for JWT Auth, Product Upload, and Mock Payment API.\n\n**How to use:**\n1. Set `base_url` variable to `http://localhost:5000`\n2. Run Register → Login (token auto-saved) → all other requests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:5000", "type": "string" },
+    { "key": "token",    "value": "",                      "type": "string" },
+    { "key": "product_id", "value": "",                    "type": "string" },
+    { "key": "payment_id", "value": "",                    "type": "string" }
+  ],
+  "item": [
+
+    {
+      "name": "🏠 Health Check",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/", "host": ["{{base_url}}"], "path": [""] }
+      },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status 200', () => pm.response.to.have.status(200));",
+          "pm.test('API running', () => {",
+          "  const j = pm.response.json();",
+          "  pm.expect(j.success).to.be.true;",
+          "});"
+        ], "type": "text/javascript" }
+      }]
+    },
+
+    {
+      "name": "🔐 Auth",
+      "item": [
+
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/auth/register", "host": ["{{base_url}}"], "path": ["api","auth","register"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Het Soni\",\n  \"email\": \"het@gmail.com\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));",
+              "pm.test('Has token', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.token).to.be.a('string');",
+              "  pm.collectionVariables.set('token', j.token);",
+              "  console.log('Token saved:', j.token.substring(0,20)+'...');",
+              "});",
+              "pm.test('User has name and email', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.user.name).to.eq('Het Soni');",
+              "  pm.expect(j.user.email).to.eq('het@gmail.com');",
+              "  pm.expect(j.user.password).to.be.undefined;",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Register – Validation Fail (missing name)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/auth/register", "host": ["{{base_url}}"], "path": ["api","auth","register"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@test.com\",\n  \"password\": \"123\"\n}"
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 422 for bad data', () => pm.response.to.have.status(422));",
+              "pm.test('Has errors array', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.errors).to.be.an('array');",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/auth/login", "host": ["{{base_url}}"], "path": ["api","auth","login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"het@gmail.com\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Token received and saved', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.token).to.be.a('string');",
+              "  pm.collectionVariables.set('token', j.token);",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Login – Wrong Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/auth/login", "host": ["{{base_url}}"], "path": ["api","auth","login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"het@gmail.com\",\n  \"password\": \"wrongpassword\"\n}"
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 401', () => pm.response.to.have.status(401));",
+              "pm.test('Error message present', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.success).to.be.false;",
+              "  pm.expect(j.message).to.be.a('string');",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Get My Profile (protected)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/auth/me", "host": ["{{base_url}}"], "path": ["api","auth","me"] }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('No password in response', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.user.password).to.be.undefined;",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Access Protected Route – No Token",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/auth/me", "host": ["{{base_url}}"], "path": ["api","auth","me"] }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 401 without token', () => pm.response.to.have.status(401));"
+            ], "type": "text/javascript" }
+          }]
+        }
+
+      ]
+    },
+
+    {
+      "name": "📦 Products",
+      "item": [
+
+        {
+          "name": "Add Product (with image upload)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/products", "host": ["{{base_url}}"], "path": ["api","products"] },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name",        "value": "Cashmere Sweater", "type": "text" },
+                { "key": "price",       "value": "2499",             "type": "text" },
+                { "key": "description", "value": "Premium cashmere, winter collection", "type": "text" },
+                { "key": "category",    "value": "Women",            "type": "text" },
+                { "key": "stock",       "value": "50",               "type": "text" },
+                { "key": "image",       "type": "file", "src": "",   "description": "Select any image file" }
+              ]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));",
+              "pm.test('Product created with correct fields', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.product.name).to.eq('Cashmere Sweater');",
+              "  pm.expect(j.product.price).to.eq(2499);",
+              "  pm.collectionVariables.set('product_id', j.product._id);",
+              "  console.log('Product ID saved:', j.product._id);",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Add Product – No Auth (should fail)",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{base_url}}/api/products", "host": ["{{base_url}}"], "path": ["api","products"] },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name",  "value": "Test", "type": "text" },
+                { "key": "price", "value": "100",  "type": "text" }
+              ]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 401 without token', () => pm.response.to.have.status(401));"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/products?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api","products"],
+              "query": [
+                { "key": "page",  "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Returns paginated list', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.products).to.be.an('array');",
+              "  pm.expect(j).to.have.property('total');",
+              "  pm.expect(j).to.have.property('totalPages');",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/products?search=cashmere&category=Women",
+              "host": ["{{base_url}}"],
+              "path": ["api","products"],
+              "query": [
+                { "key": "search",   "value": "cashmere" },
+                { "key": "category", "value": "Women" }
+              ]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Get Single Product",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/products/{{product_id}}", "host": ["{{base_url}}"], "path": ["api","products","{{product_id}}"] }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Product ID matches', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.product._id).to.eq(pm.collectionVariables.get('product_id'));",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/products/{{product_id}}", "host": ["{{base_url}}"], "path": ["api","products","{{product_id}}"] },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "price", "value": "2999", "type": "text" },
+                { "key": "stock", "value": "45",   "type": "text" }
+              ]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Price updated', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.product.price).to.eq(2999);",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/products/{{product_id}}", "host": ["{{base_url}}"], "path": ["api","products","{{product_id}}"] }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Success message', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.success).to.be.true;",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        }
+
+      ]
+    },
+
+    {
+      "name": "💳 Payment",
+      "item": [
+
+        {
+          "name": "Process Payment – Success",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/payment", "host": ["{{base_url}}"], "path": ["api","payment"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 2499,\n  \"currency\": \"INR\",\n  \"method\": \"upi\",\n  \"description\": \"Purchase: Cashmere Sweater\"\n}"
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Payment success', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.success).to.be.true;",
+              "  pm.expect(j.payment.transactionId).to.be.a('string');",
+              "  pm.expect(j.payment.status).to.eq('success');",
+              "  pm.collectionVariables.set('payment_id', j.payment.transactionId);",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Process Payment – Invalid Amount",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type",  "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/payment", "host": ["{{base_url}}"], "path": ["api","payment"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": -50\n}"
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 422 for negative amount', () => pm.response.to.have.status(422));"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Payment – No Auth",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/payment", "host": ["{{base_url}}"], "path": ["api","payment"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 100\n}"
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 401 without token', () => pm.response.to.have.status(401));"
+            ], "type": "text/javascript" }
+          }]
+        },
+
+        {
+          "name": "Payment History",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/payment/history", "host": ["{{base_url}}"], "path": ["api","payment","history"] }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Returns array of payments', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.payments).to.be.an('array');",
+              "});"
+            ], "type": "text/javascript" }
+          }]
+        }
+
+      ]
+    },
+
+    {
+      "name": "❌ Error Cases",
+      "item": [
+        {
+          "name": "404 – Route Not Found",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/nonexistent", "host": ["{{base_url}}"], "path": ["api","nonexistent"] }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 404', () => pm.response.to.have.status(404));"
+            ], "type": "text/javascript" }
+          }]
+        },
+        {
+          "name": "Get Product – Invalid ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/products/not-a-valid-id", "host": ["{{base_url}}"], "path": ["api","products","not-a-valid-id"] }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 400 for invalid ID', () => pm.response.to.have.status(400));"
+            ], "type": "text/javascript" }
+          }]
+        }
+      ]
+    }
+
+  ]
+}

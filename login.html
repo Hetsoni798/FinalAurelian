@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — AURELIAN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Single shared stylesheet -->
+    <link rel="stylesheet" href="css/login-Styles.css">
+</head>
+<body>
+    <!-- Minimal Nav -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">AURELIAN</a>
+        </div>
+    </nav>
+
+    <!-- Login Layout -->
+    <div class="login-container">
+
+        <!-- Left — editorial image -->
+        <div class="login-left">
+            <img
+                src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&h=1600&fit=crop&q=80"
+                alt="AURELIAN editorial"
+                class="login-bg-img"
+                loading="eager"
+            >
+            <div class="login-left-overlay">
+                <blockquote>
+                    <p>"Style is a way to say who you are without having to speak."</p>
+                    <cite>— Rachel Zoe</cite>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- Right — form -->
+        <div class="login-right">
+            <div class="login-form-container">
+
+                <div class="form-header">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to access your account and saved pieces.</p>
+                </div>
+
+                <form class="login-form" id="loginForm" novalidate>
+                    <!-- Email -->
+                    <div class="form-group" id="emailGroup">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrap">
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="your@email.com"
+                                autocomplete="email"
+                                required
+                            >
+                            <span class="input-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </span>
+                        </div>
+                        <p class="field-error" id="emailError"></p>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group" id="passwordGroup">
+                        <label for="password">Password</label>
+                        <div class="input-wrap">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+                            <button type="button" class="input-icon toggle-password" id="togglePassword" aria-label="Show password">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                        <p class="field-error" id="passwordError"></p>
+                    </div>
+
+                    <!-- Options row -->
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="remember" name="remember">
+                            <span class="checkbox-custom"></span>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="login-btn" id="loginBtn">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-loader" hidden>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spinner"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg>
+                        </span>
+                    </button>
+
+                    <!-- Error message (general) -->
+                    <div class="form-error" id="formError" hidden></div>
+                </form>
+
+                <!-- Divider -->
+                <div class="divider"><span>or continue with</span></div>
+
+                <!-- Social -->
+                <div class="social-login">
+                    <button type="button" class="social-btn" id="googleBtn" aria-label="Sign in with Google">
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                            <path d="M19.5 10.23C19.5 9.52 19.44 8.84 19.33 8.18H10v3.87h5.38c-.23 1.25-.94 2.31-2 2.98v2.51h3.2c1.82-1.74 2.92-4.3 2.92-7.34z" fill="#4285F4"/>
+                            <path d="M10 20c2.7 0 4.96-1.1 6.58-2.57l-3.2-2.51c-.9.6-2.04.96-3.38.96-2.6 0-4.81-1.76-5.6-4.12H1.09v2.59C2.71 17.76 6.09 20 10 20z" fill="#34A853"/>
+                            <path d="M4.4 11.76C4.2 11.16 4.09 10.52 4.09 9.86s.11-1.3.31-1.9V5.37H1.09A9.97 9.97 0 000 9.86c0 1.61.4 3.14 1.09 4.49l3.31-2.59z" fill="#FBBC04"/>
+                            <path d="M10 3.88c1.47 0 2.79.5 3.82 1.49l2.86-2.86C14.96 1 12.7 0 10 0 6.09 0 2.71 2.24 1.09 5.37l3.31 2.59C5.19 5.6 7.4 3.88 10 3.88z" fill="#EA4335"/>
+                        </svg>
+                        Google
+                    </button>
+                    <button type="button" class="social-btn" id="appleBtn" aria-label="Sign in with Apple">
+                        <svg width="16" height="18" viewBox="0 0 814 1000" fill="currentColor">
+                            <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-37.5-155.5-127.8c-42.9-78.5-75.1-222.8-75.1-319.6 0-198.3 129.9-302.7 257.5-302.7 64.4 0 118.1 42.2 158.6 42.2 38.9 0 100-44.9 170.1-44.9 33.6 0 139.9 4 211.3 99.6zm-139-116.6c-32.7 36.4-80.8 65.2-136.2 65.2-11.5 0-23.1-1.3-32.7-3.2 0-40.2 21.8-84.8 54.5-117.6 30.3-30.3 83.2-55.7 124.1-57.9.6 4.5 1.3 9 1.3 13.6 0 37.8-7.1 77.6-10.9 99.9z"/>
+                        </svg>
+                        Apple
+                    </button>
+                </div>
+
+                <!-- Sign up -->
+                <div class="signup-row">
+                    <p>New to AURELIAN? <a href="#" class="signup-link">Create an account</a></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="login-scripts.js"></script>
+</body>
+</html>

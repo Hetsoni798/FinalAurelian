@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURELIAN — Contemporary Fashion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-links desktop-only">
+                    <a href="#new" class="nav-link">New Arrivals</a>
+                    <a href="#women" class="nav-link">Women</a>
+                    <a href="#men" class="nav-link">Men</a>
+                    <a href="#accessories" class="nav-link">Accessories</a>
+                </div>
+            </div>
+
+            <div class="nav-center">
+                <a href="index.html" class="logo">AURELIAN</a>
+            </div>
+
+            <div class="nav-right">
+                <button class="nav-icon search-toggle" aria-label="Search" id="searchToggle">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                        <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="13" y1="13" x2="18" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <a href="login.html" class="nav-icon user-icon" aria-label="Account">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                        <circle cx="10" cy="6" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M4 18c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </a>
+                <button class="nav-icon cart-icon" id="cartIcon" aria-label="Cart">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                        <path d="M3 3h2l1.5 9h10l1.5-6H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="8" cy="17" r="1" fill="currentColor"/>
+                        <circle cx="16" cy="17" r="1" fill="currentColor"/>
+                    </svg>
+                    <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar" id="searchBar">
+            <div class="search-inner">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/>
+                    <line x1="13" y1="13" x2="18" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search for pieces..." autocomplete="off">
+                <button class="search-close" id="searchClose" aria-label="Close search">×</button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-links">
+                <a href="#new">New Arrivals</a>
+                <a href="#women">Women</a>
+                <a href="#men">Men</a>
+                <a href="#accessories">Accessories</a>
+                <a href="#sale">Sale</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="hero-eyebrow">Spring / Summer</p>
+            <h1 class="hero-title">
+                <span class="hero-line">The Art of</span>
+                <span class="hero-line hero-line--italic">Dressing</span>
+                <span class="hero-year">2026</span>
+            </h1>
+            <p class="hero-subtitle">Where restraint becomes luxury.<br>Where silence becomes statement.</p>
+            <div class="hero-actions">
+                <a href="#products" class="cta-button">Explore Collection</a>
+                <a href="#new" class="cta-link">What's New →</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&h=1600&fit=crop&q=80" alt="AURELIAN Spring Collection 2026" loading="eager">
+        </div>
+        <div class="hero-scroll-hint">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Editorial Banner -->
+    <div class="editorial-banner">
+        <p>"Luxury is not about having everything. It's about having the right things."</p>
+    </div>
+
+    <!-- Category Pills -->
+    <div class="category-section">
+        <div class="category-pills" role="group" aria-label="Filter by category">
+            <button class="pill active" data-category="all">All</button>
+            <button class="pill" data-category="new">New Arrivals</button>
+            <button class="pill" data-category="women">Women</button>
+            <button class="pill" data-category="men">Men</button>
+            <button class="pill" data-category="accessories">Accessories</button>
+        </div>
+        <div class="product-count">
+            <span id="productCount">8 pieces</span>
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <section class="products-section" id="products">
+        <div class="products-grid" id="productsGrid">
+            <!-- Product 1 -->
+            <article class="product-card" data-category="women new" data-id="1" data-name="Cashmere Sweater" data-price="245">
+                <div class="product-image">
+                    <span class="product-badge">New</span>
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop&q=80" alt="Cashmere Sweater" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="quick-add" aria-label="Add Cashmere Sweater to cart">Add to Cart</button>
+                        <button class="wishlist-btn" aria-label="Save to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <h3 class="product-name">Cashmere Sweater</h3>
+                        <p class="product-category">Women's Knitwear</p>
+                    </div>
+                    <p class="product-price">$245</p>
+                </div>
+            </article>
+
+            <!-- Product 2 -->
+            <article class="product-card product-card--featured" data-category="men new" data-id="2" data-name="Tailored Blazer" data-price="425">
+                <div class="product-image">
+                    <span class="product-badge">New</span>
+                    <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop&q=80" alt="Tailored Blazer" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="quick-add" aria-label="Add Tailored Blazer to cart">Add to Cart</button>
+                        <button class="wishlist-btn" aria-label="Save to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <h3 class="product-name">Tailored Blazer</h3>
+                        <p class="product-category">Men's Outerwear</p>
+                    </div>
+                    <p class="product-price">$425</p>
+                </div>
+            </article>
+
+            <!-- Product 3 -->
+            <article class="product-card" data-category="women" data-id="3" data-name="Silk Midi Dress" data-price="385">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&h=800&fit=crop&q=80" alt="Silk Midi Dress" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="quick-add" aria-label="Add Silk Midi Dress to cart">Add to Cart</button>
+                        <button class="wishlist-btn" aria-label="Save to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <h3 class="product-name">Silk Midi Dress</h3>
+                        <p class="product-category">Women's Dresses</p>
+                    </div>
+                    <p class="product-price">$385</p>
+                </div>
+            </article>
+
+            <!-- Product 4 -->
+            <article class="product-card" data-category="accessories new" data-id="4" data-name="Leather Handbag" data-price="550">
+                <div class="product-image">
+                    <span class="product-badge">New</span>
+                    <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&h=800&fit=crop&q=80" alt="Leather Handbag" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="quick-add" aria-label="Add Leather Handbag to cart">Add to Cart</button>
+                        <button class="wishlist-btn" aria-label="Save to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <h3 class="product-name">Leather Handbag</h3>
+                        <p class="product-category">Accessories</p>
+                    </div>
+                    <p class="product-price">$550</p>
+                </div>
+            </article>
+
+            <!-- Product 5 -->
+            <article class="product-card" data-category="men" data-id="5" data-name="Merino Polo" data-price="165">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=600&h=800&fit=crop&q=80" alt="Merino Polo" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="quick-add" aria-label="Add Merino Polo to cart">Add to Cart</button>
+                        <button class="wishlist-btn" aria-label="Save to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <h3 class="product-name">Merino Polo</h3>
+                        <p class="product-category">Men's Casual</p>
+                    </div>
+                    <p class="product-price">$165</p>
+                </div>
+            </article>
+
+            <!-- Product 6 -->
+            <article class="product-card" data-category="men" data-id="6" data-name="Wool Jacket" data-price="195">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=600&h=800&fit=crop&q=80" alt="Wool Jacket" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="quick-add" aria-label="Add Wool Jacket to cart">Add to Cart</button>
+                        <button class="wishlist-btn" aria-label="Save to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <h3 class="product-name">Wool Jacket</h3>
+                        <p class="product-category">Men's Layers</p>
+                    </div>
+                    <p class="product-price">$195</p>
+                </div>
+            </article>
+
+            <!-- Product 7 -->
+            <article class="product-card" data-category="accessories" data-id="7" data-name="Minimalist Watch" data-price="320">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1523268755815-fe7c372a0349?w=600&h=800&fit=crop&q=80" alt="Minimalist Watch" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="quick-add" aria-label="Add Minimalist Watch to cart">Add to Cart</button>
+                        <button class="wishlist-btn" aria-label="Save to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <h3 class="product-name">Minimalist Watch</h3>
+                        <p class="product-category">Accessories</p>
+                    </div>
+                    <p class="product-price">$320</p>
+                </div>
+            </article>
+
+            <!-- Product 8 -->
+            <article class="product-card" data-category="men" data-id="8" data-name="Oxford Shirt" data-price="145">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1603252109303-2751441dd157?w=600&h=800&fit=crop&q=80" alt="Oxford Shirt" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="quick-add" aria-label="Add Oxford Shirt to cart">Add to Cart</button>
+                        <button class="wishlist-btn" aria-label="Save to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-meta">
+                        <h3 class="product-name">Oxford Shirt</h3>
+                        <p class="product-category">Men's Shirts</p>
+                    </div>
+                    <p class="product-price">$145</p>
+                </div>
+            </article>
+        </div>
+
+        <!-- No Results -->
+        <div class="no-results" id="noResults" hidden>
+            <p>No pieces found in this category.</p>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <aside class="cart-sidebar" id="cartSidebar" aria-label="Shopping cart" aria-hidden="true">
+        <div class="cart-header">
+            <h2>Your Cart <span class="cart-header-count" id="cartHeaderCount"></span></h2>
+            <button class="close-cart" id="closeCart" aria-label="Close cart">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                <p>Your cart is empty</p>
+                <a href="#products" class="empty-cart-cta" id="emptyCartCta">Browse Collection</a>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" hidden>
+            <div class="cart-subtotal">
+                <span>Subtotal</span>
+                <span>$<span id="totalPrice">0</span></span>
+            </div>
+            <p class="cart-shipping-note">Shipping & taxes calculated at checkout</p>
+            <button class="checkout-button">Proceed to Checkout</button>
+            <button class="continue-shopping" id="continueShoppingBtn">Continue Shopping</button>
+        </div>
+    </aside>
+
+    <div class="cart-overlay" id="cartOverlay" aria-hidden="true"></div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="index.html" class="footer-logo">AURELIAN</a>
+                <p>Timeless elegance meets<br>contemporary design.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Women</a></li>
+                        <li><a href="#">Men</a></li>
+                        <li><a href="#">Accessories</a></li>
+                        <li><a href="#">Sale</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-newsletter">
+                <h4>Stay in the Conversation</h4>
+                <p>Exclusive offers, new arrivals, and editorial stories — delivered rarely, but meaningfully.</p>
+                <form class="newsletter-form" id="newsletterForm" novalidate>
+                    <div class="newsletter-input-wrap">
+                        <input type="email" placeholder="your@email.com" aria-label="Email address" required>
+                        <button type="submit">Subscribe</button>
+                    </div>
+                    <p class="newsletter-notice">No spam. Unsubscribe anytime.</p>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AURELIAN. All rights reserved.</p>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
